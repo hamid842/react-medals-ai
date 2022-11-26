@@ -23,7 +23,7 @@
     "@tabler/icons": "^1.96.0",
     "add": "^2.0.6",
     "apexcharts": "^3.35.5",
-    "axios": "^0.27.2",
+    "axios": "^1.2.0",
     "country-flag-icons": "^1.5.5",
     "dayjs": "^1.11.5",
     "formik": "^2.2.9",
@@ -55,7 +55,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
-    "@rollup/plugin-alias": "^3.1.9",
+    "@rollup/plugin-alias": "^4.0.2",
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.0.6",
     "@types/react-router-dom": "^5.3.3",
