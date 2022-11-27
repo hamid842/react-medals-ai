@@ -3,6 +3,7 @@ import * as actionTypes from '../actions';
 
 const initialState = {
   loggedInUserName: "",
+  isLoggedIn:false,
   isLoading: false,
   errorMessage: "",
   isAdmin:false,
@@ -19,6 +20,7 @@ const loginReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         loggedInUserName: action.payload,
+        isLoggedIn: true
       };
     case actionTypes.LOGIN_FAILED_ACTION:
       return {
