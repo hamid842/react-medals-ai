@@ -7,10 +7,10 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import {renderRelationship} from "@/utils/render-relationship";
 import MainCard from "@/ui-component/cards/MainCard";
 import SkeletonEarningCard from "@/ui-component/cards/Skeleton/EarningCard";
-import EditCaregiverDialog from "@/views/pages/care-givers/EditCaregiverDialog";
-import DeleteCaregiverDialog from "@/views/pages/care-givers/DeleteCaregiverDialog";
+import EditCaregiverDialog from "@/views/pages/caregivers/EditCaregiverDialog";
+import DeleteCaregiverDialog from "@/views/pages/caregivers/DeleteCaregiverDialog";
 
-const CaregiverCardWrapper = styled(MainCard)(({theme}) => ({
+const PatientCardWrapper = styled(MainCard)(({theme}) => ({
     backgroundColor: theme.palette.secondary.main,
     color: '#fff',
     overflow: 'hidden',
@@ -18,8 +18,8 @@ const CaregiverCardWrapper = styled(MainCard)(({theme}) => ({
     '&:after': {
         content: '""',
         position: 'absolute',
-        width: 210,
-        height: 210,
+        width: 200,
+        height: 200,
         background: theme.palette.secondary[800],
         borderRadius: '50%',
         top: -85,
@@ -32,8 +32,8 @@ const CaregiverCardWrapper = styled(MainCard)(({theme}) => ({
     '&:before': {
         content: '""',
         position: 'absolute',
-        width: 210,
-        height: 210,
+        width: 200,
+        height: 200,
         background: theme.palette.secondary[800],
         borderRadius: '50%',
         top: -125,
@@ -48,7 +48,7 @@ const CaregiverCardWrapper = styled(MainCard)(({theme}) => ({
 
 // ===========================|| CAREGIVER ITEM ||=========================== //
 
-const CaregiverItem = ({caregiverDetails}) => {
+const PatientItem = ({patientDetails}) => {
     const theme = useTheme();
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -62,11 +62,11 @@ const CaregiverItem = ({caregiverDetails}) => {
     };
     return (
         <Box sx={{marginY: 2}}>
-            {!caregiverDetails ? (
+            {!patientDetails ? (
                 <SkeletonEarningCard/>
             ) : (
-                <CaregiverCardWrapper border={false} content={false}>
-                    <Box sx={{p: 2.25}}>
+                <PatientCardWrapper border={false} content={false}>
+                    <Box sx={{p: 2.20}}>
                         <Grid container direction="column">
                             <Grid item>
                                 <Grid container justifyContent="space-between">
@@ -80,15 +80,15 @@ const CaregiverItem = ({caregiverDetails}) => {
                                                 mt: 1
                                             }}
                                         >
-                                            {caregiverDetails?.profileImageUrl && <img src={caregiverDetails?.profileImageUrl} alt="Pic"/>}
+                                            {patientDetails?.profileImageUrl && <img src={patientDetails?.profileImageUrl} alt="Pic"/>}
                                         </Avatar>
                                     </Grid>
                                     <Grid item>
-                                        <Typography>{caregiverDetails?.socialSecurityNo}</Typography>
-                                        <Typography>{caregiverDetails?.email}</Typography>
-                                        <Typography>{caregiverDetails?.phoneNumber1}</Typography>
-                                        <Typography>{caregiverDetails?.phoneNumber2}</Typography>
-                                        <Typography>{caregiverDetails?.address}</Typography>
+                                        <Typography>{patientDetails?.socialSecurityNo}</Typography>
+                                        <Typography>{patientDetails?.email}</Typography>
+                                        <Typography>{patientDetails?.phoneNumber1}</Typography>
+                                        <Typography>{patientDetails?.phoneNumber2}</Typography>
+                                        <Typography>{patientDetails?.address}</Typography>
                                     </Grid>
                                     <Grid item>
                                         <Avatar
@@ -122,8 +122,8 @@ const CaregiverItem = ({caregiverDetails}) => {
                                                 horizontal: 'right'
                                             }}
                                         >
-                                            <EditCaregiverDialog closeMenu={handleClose} caregiverDetails={caregiverDetails}/>
-                                            <DeleteCaregiverDialog closeMenu={handleClose} caregiverDetails={caregiverDetails}/>
+                                            <EditCaregiverDialog closeMenu={handleClose} patientDetails={patientDetails}/>
+                                            <DeleteCaregiverDialog closeMenu={handleClose} patientDetails={patientDetails}/>
                                         </Menu>
                                     </Grid>
                                 </Grid>
@@ -133,7 +133,7 @@ const CaregiverItem = ({caregiverDetails}) => {
                                     <Grid item>
                                         <Typography
                                             sx={{fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75}}>
-                                            {caregiverDetails?.firstName} {caregiverDetails?.lastName}
+                                            {patientDetails?.firstName} {patientDetails?.lastName}
                                         </Typography>
                                     </Grid>
                                 </Grid>
@@ -146,14 +146,14 @@ const CaregiverItem = ({caregiverDetails}) => {
                                         color: theme.palette.secondary[200]
                                     }}
                                 >
-                                    {renderRelationship(caregiverDetails?.relationshipWithUser)}
+                                    {renderRelationship(patientDetails?.relationshipWithUser)}
                                 </Typography>
                             </Grid>
                         </Grid>
                     </Box>
-                </CaregiverCardWrapper>
+                </PatientCardWrapper>
             )}
         </Box>
     )
 }
-export default CaregiverItem;
+export default PatientItem;

@@ -1,4 +1,6 @@
+// third party
 import PropTypes from 'prop-types';
+import {useSelector} from "react-redux";
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -17,7 +19,7 @@ import ChangeThemeButton from "@/layout/MainLayout/Header/ProfileSection/ChangeT
 
 const Header = ({ handleLeftDrawerToggle }) => {
     const theme = useTheme();
-
+const loginState = useSelector(state=>state.login)
     return (
         <>
             {/* logo & toggler button */}
@@ -33,7 +35,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
                 <Box component="span" sx={{ display: { xs: 'none', md: 'block' }, flexGrow: 1 }}>
                     <LogoSection width={70} height={50} />
                 </Box>
-                <ButtonBase sx={{ borderRadius: '12px', overflow: 'hidden' }}>
+                {!loginState.isCaregiver && <ButtonBase sx={{borderRadius: '12px', overflow: 'hidden'}}>
                     <Avatar
                         variant="rounded"
                         sx={{
@@ -50,9 +52,9 @@ const Header = ({ handleLeftDrawerToggle }) => {
                         onClick={handleLeftDrawerToggle}
                         color="inherit"
                     >
-                        <IconMenu2 stroke={1.5} size="1.3rem" />
+                        <IconMenu2 stroke={1.5} size="1.3rem"/>
                     </Avatar>
-                </ButtonBase>
+                </ButtonBase>}
             </Box>
 
             {/* header search */}

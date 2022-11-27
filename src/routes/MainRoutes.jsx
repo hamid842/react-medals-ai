@@ -12,7 +12,7 @@ const ActivityRecords = Loadable(lazy(() => import('@/views/pages/health-data/ac
 const BloodOxygen = Loadable(lazy(() => import('@/views/pages/health-data/blood-oxygen')));
 const Ecg = Loadable(lazy(() => import('@/views/pages/health-data/ecg')));
 const Analytics = Loadable(lazy(() => import('@/views/pages/health-data/analytics')));
-const Caregivers = Loadable(lazy(() => import('@/views/pages/care-givers')));
+const Caregivers = Loadable(lazy(() => import('@/views/pages/caregivers')));
 const Logs = Loadable(lazy(() => import('@/views/pages/setting')));
 const CaregiverPatients = Loadable(lazy(() => import('@/views/pages/caregiver-patients')));
 

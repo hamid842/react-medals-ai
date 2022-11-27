@@ -13,14 +13,22 @@ import {strengthColor, strengthIndicator} from "@/utils/password-strength";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import {useSnackbar} from "notistack";
+import {useDispatch} from "react-redux";
+import {login} from "@/store/actions/login";
 // TODO what fields are required
 // TODO fields is good or not
 // TODO caregiver automatically login after register or not(with what credentials)
 
 // ============================|| CREATE CAREGIVER FORM ||============================ //
 
-const CreateCaregiverForm = ({isModal, caregiverDetails}) => {
+//Endpoints
+const registerCaregiverApi = import.meta.env.VITE_REGISTER_CARE_GIVER_API;
+
+const CreateCaregiverForm = ({isModal,caregiverDetails}) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const {enqueueSnackbar} = useSnackbar()
     const [showPass, setShowPass] = useState(false);
     const [strength, setStrength] = useState(0);
     const [level, setLevel] = useState();
@@ -70,24 +78,45 @@ const CreateCaregiverForm = ({isModal, caregiverDetails}) => {
         relationshipWithUser: Yup.string().required("Mobile number is required!"),
     });
 
+    // const loginAsCaregiver = async (values) => {
+    //     await axios.post(loginApi, {username: values.email, password: values.password})
+    //         .then(res => {
+    //             if (res.status === 200 || 201) {
+    //                 navigate("/caregiver-patients-list");
+    //                 enqueueSnackbar("You are logged in as caregiver", {variant: "info"})
+    //             }
+    //         }).catch(err => {
+    //             console.log(err)
+    //             enqueueSnackbar(err?.response?.data?.detail, {variant: "error"})
+    //         })
+    // }
+
+    const handleSubmit = async (values, {setErrors, setSubmitting}) => {
+        if (values.password !== values.confirmPass) enqueueSnackbar("Passwords don't match!", {variant: "error"})
+        else await axios
+            .post(registerCaregiverApi, {
+                ...values,
+                user: {login: values.email}
+            }, {headers: {password: values.password}})
+            .then((res) => {
+                if (res.status === 200 || 201) {
+                    enqueueSnackbar("Registered successfully.", {variant: "success"})
+                    setSubmitting(true);
+                    dispatch(login(values.username, values.password, navigate));
+                }
+            })
+            .catch((err) => {
+                enqueueSnackbar(err?.response?.data?.message, {variant: "error"})
+                setErrors(err.response.data);
+                setSubmitting(false);
+            });
+    }
+
     return (
         <Formik
             initialValues={caregiverInfo}
             validationSchema={validationSchema}
-            onSubmit={async (values, {setErrors, setSubmitting}) => {
-                await axios
-                    .post(import.meta.env.VITE_REGISTER_CARE_GIVER_API, {...values, user: {login: values.email}})
-                    .then((res) => {
-                        if (res.status === 200 || 201) {
-                            navigate('caregiver-patients-list')
-                            setSubmitting(true);
-                        }
-                    })
-                    .catch((err) => {
-                        setErrors(err.response.data);
-                        setSubmitting(false);
-                    });
-            }}
+            onSubmit={handleSubmit}
         >
             {({
                   errors,
@@ -102,7 +131,7 @@ const CreateCaregiverForm = ({isModal, caregiverDetails}) => {
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <Typography variant={"h4"}>
-                                {isModal ? "Register new caregiver" : "Signing up as a caregiver"}
+                                {isModal ? "Editing caregiver" : "Register new caregiver"}
                             </Typography>
                         </Grid>
                         <Grid item xs={12} sm={12} lg={6}>

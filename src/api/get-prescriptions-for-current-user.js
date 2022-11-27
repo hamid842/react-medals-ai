@@ -1,5 +1,5 @@
 import * as ajax from "@/utils/ajax";
-import { catchError, concatMap, EMPTY, map } from "rxjs";
+import { catchError, EMPTY, map } from "rxjs";
 
 export const prescriptions$ = ajax
   .get(import.meta.env.VITE_PRESCRIPTIONS_FOR_CURRENT_USER_API)

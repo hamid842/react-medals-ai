@@ -1,16 +1,14 @@
 import {createContext, useMemo, useState} from 'react';
-
+// third party
 import { useSelector } from 'react-redux';
-
+import { SnackbarProvider } from 'notistack';
+// material ui
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, StyledEngineProvider } from '@mui/material';
-
 // routing
 import Routes from '@/routes';
-
 // defaultTheme
 import themes from '@/themes';
-
 // project imports
 import NavigationScroll from '@/layout/NavigationScroll';
 
@@ -41,10 +39,12 @@ const App = () => {
         <StyledEngineProvider injectFirst>
             <ColorModeContext.Provider value={colorMode}>
             <ThemeProvider theme={theme}>
+                <SnackbarProvider maxSnack={3}>
                 <CssBaseline />
                 <NavigationScroll>
                     <Routes />
                 </NavigationScroll>
+                </SnackbarProvider>
             </ThemeProvider>
             </ColorModeContext.Provider>
         </StyledEngineProvider>

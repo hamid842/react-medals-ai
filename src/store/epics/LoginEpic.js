@@ -24,7 +24,7 @@ export const loginUserEpic = (action$) =>
                 map(({response}) => {
                     localStorage.setItem("token", response?.access_token);
                     const decodedToken = jwtDecode(response?.access_token)
-                    return loginSuccessAction(decodedToken.preferred_username,action.payload.navigate)
+                    return loginSuccessAction(decodedToken,action.payload.navigate)
                 }),
                 catchError(error => of({
                     type: actionTypes.LOGIN_FAILED_ACTION,

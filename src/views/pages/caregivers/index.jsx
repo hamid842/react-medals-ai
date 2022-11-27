@@ -6,7 +6,7 @@ import {getPatientCaregivers} from "@/api/get-patient-caregivers";
 import Loading from "@/ui-component/Loading";
 import CaregiverItem from "./CaregiverItem";
 import {Fab} from "@mui/material";
-import CreateCaregiverDialog from "@/views/pages/care-givers/CreateCaregiverDialog";
+import AddCaregiverDialog from "@/views/pages/caregivers/AddCaregiverDialog";
 
 // ===========================|| CAREGIVERS ||=========================== //
 
@@ -70,7 +70,7 @@ const CareGivers = () => {
             ) : (
                 <Loading visible={caregivers.length === 0}/>
             )}
-            <CreateCaregiverDialog />
+            <AddCaregiverDialog />
         </>
     )
 }

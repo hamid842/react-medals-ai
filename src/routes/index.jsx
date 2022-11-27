@@ -1,9 +1,9 @@
-import {useRoutes} from 'react-router-dom';
 // routes
 import MainRoutes from './MainRoutes';
 import AuthenticationRoutes from './AuthenticationRoutes';
 // third party
 import {useSelector} from "react-redux";
+import {useRoutes} from 'react-router-dom';
 // project imports
 import config from '@/config';
 

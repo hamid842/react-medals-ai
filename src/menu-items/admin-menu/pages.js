@@ -104,7 +104,7 @@ const pages = {
             ]
         },
         {
-            id: 'care-givers',
+            id: 'caregivers',
             title: 'Caregivers',
             type: 'item',
             url:'/caregivers',

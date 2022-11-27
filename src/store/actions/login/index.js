@@ -1,5 +1,4 @@
 import * as actionTypes from "@/store/actions";
-import jwtDecode from "jwt-decode";
 
 export function login(username, password, navigate) {
     return {
@@ -8,12 +7,14 @@ export function login(username, password, navigate) {
     };
 }
 
-export function loginSuccessAction(token, navigate) {
-    navigate("/dashboard")
-
-        return {
+export function loginSuccessAction(decodedToken, navigate) {
+    console.log(decodedToken?.realm_access?.roles)
+    if (decodedToken?.realm_access?.roles?.includes("LOVED_ONE") || decodedToken?.realm_access?.roles?.includes("DOCTOR") || decodedToken?.realm_access?.roles?.includes("NURSE"))
+        navigate("/caregiver-patients-list")
+    else navigate("/dashboard")
+    return {
         type: actionTypes.LOGIN_SUCCESS_ACTION,
-        payload: token,
+        payload: decodedToken,
     };
 }
 
