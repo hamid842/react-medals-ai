@@ -18,6 +18,7 @@ const TimeTable = ({ data }) => {
   const renderTakenEnums = (title) => {
     if (title === "NOT_TAKEN") return "NOT Taken";
     if (title === "TAKEN") return "Taken";
+    if (title === "MISSED") return "Missed";
   };
   const [state] = useState({
     columns: [
