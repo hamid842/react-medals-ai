@@ -6,33 +6,28 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import {makeStyles} from "@mui/styles";
-import {Chip, createTheme} from "@mui/material";
-import dayjs from "dayjs";
-import {IconAlertOctagon, IconChecks} from "@tabler/icons";
 import MaterialTable from "material-table";
 
-const theme = createTheme();
-const useStyles = makeStyles({
-    [theme.breakpoints.down("sm")]: {
-        "@global tbody tr:nth-child(odd)": {
-            background: "lightgray",
-        },
-        "@global tbody tr:nth-child(even)": {
-            background: "white",
-        },
-    },
-    tableCell: {
-        display: "flex",
-        flexDirection: "column",
-        width: "100%",
-    },
-});
+// const theme = createTheme();
+// const useStyles = makeStyles({
+//     [theme.breakpoints.down("sm")]: {
+//         "@global tbody tr:nth-child(odd)": {
+//             background: "lightgray",
+//         },
+//         "@global tbody tr:nth-child(even)": {
+//             background: "white",
+//         },
+//     },
+//     tableCell: {
+//         display: "flex",
+//         flexDirection: "column",
+//         width: "100%",
+//     },
+// });
 
 // ============================< APP TABLE >============================ //
 
 const AppTable = (props) => {
-    const classes = useStyles();
     const tableIcons = {
         Add: forwardRef((props, ref) => (
             <AddBoxIcon
@@ -57,20 +52,8 @@ const AppTable = (props) => {
     };
     const {
         xs,
-        title,
         columns,
-        tableRef,
-        localization,
-        actions,
         data = [],
-        editable,
-        actionsColumnIndex = -1,
-        toolbar,
-        paging,
-        showEmptyDataSourceMessage,
-        detailPanel,
-        style,
-        onRowClick,
     } = props;
 
     // const renderTakenEnums = (title) => {
@@ -82,50 +65,40 @@ const AppTable = (props) => {
 
     return (
         <MaterialTable
-          title={title}
-          style={style}
-          columns={columns}
-          tableRef={tableRef}
-          options={{
-            headerStyle: xs
-              ? {
-                  background: "#F8F9F9",
-                  fontWeight: "bold",
-                  display: "none",
-                }
-              : {},
-            rowStyle: xs
-              ? {
-                  width: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                }
-              : {},
-            emptyRowsWhenPaging: false,
-            pageSize: 10,
-            pageSizeOptions: [10, 20, 30],
-            toolbar,
-            actionsColumnIndex,
-            search: false,
-            paging,
-            sorting: true,
-            showEmptyDataSourceMessage,
-            detailPanelColumnAlignment: xs ? "right" : "left",
-          }}
-          localization={localization}
-          actions={actions}
-          editable={editable}
-          icons={tableIcons}
-          data={data}
-          detailPanel={detailPanel}
-          // components={{
-          //   EditRow: (props) => {
-          //     return (
-          //       <MTableEditRow {...props} className={xs ? classes.tableCell : ""} />
-          //     );
-          //   },
-          // }}
-          onRowClick={onRowClick}
+            columns={columns}
+            options={{
+                headerStyle: xs
+                    ? {
+                        background: "#F8F9F9",
+                        fontWeight: "bold",
+                        display: "none",
+                    }
+                    : {},
+                rowStyle: xs
+                    ? {
+                        width: "100%",
+                        display: "flex",
+                        flexDirection: "column",
+                    }
+                    : {},
+                emptyRowsWhenPaging: false,
+                pageSize: 10,
+                pageSizeOptions: [10, 20, 30],
+                toolbar:false,
+                search: false,
+                paging:false,
+                sorting: true,
+                detailPanelColumnAlignment: xs ? "right" : "left",
+            }}
+            icons={tableIcons}
+            data={data}
+            // components={{
+            //   EditRow: (props) => {
+            //     return (
+            //       <MTableEditRow {...props} className={xs ? classes.tableCell : ""} />
+            //     );
+            //   },
+            // }}
         />
         //     <div style={{display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems:'center'}}>
         //        <span>

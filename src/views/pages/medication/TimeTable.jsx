@@ -28,9 +28,9 @@ const TimeTable = ({ data }) => {
         align: "left",
         render: (rowData) => (
           <RenderCell cellTitle="Start:">
-            {rowData.startDatetime ? (
+            {rowData?.startDatetime ? (
               <span>
-                {dayjs(rowData.startDatetime).format("YYYY-MM-DD HH:mm")}
+                {dayjs(rowData?.startDatetime).format("YYYY-MM-DD HH:mm")}
               </span>
             ) : (
               <span />
@@ -44,9 +44,9 @@ const TimeTable = ({ data }) => {
         align: "left",
         render: (rowData) => (
           <RenderCell cellTitle="Date:">
-            {rowData.endDateTime ? (
+            {rowData?.endDateTime ? (
               <span>
-                {dayjs(rowData.endDateTime).format("YYYY-MM-DD HH:mm")}
+                {dayjs(rowData?.endDateTime).format("YYYY-MM-DD HH:mm")}
               </span>
             ) : (
               <span />
@@ -61,11 +61,11 @@ const TimeTable = ({ data }) => {
         render: (rowData) => (
           <RenderCell cellTitle="Is Taken:">
             <Chip
-              label={renderTakenEnums(rowData.isTaken)}
+              label={renderTakenEnums(rowData?.isTaken)}
               variant="outlined"
-              color={rowData.isTaken === "TAKEN" ? "success" : "error"}
+              color={rowData?.isTaken === "TAKEN" ? "success" : "error"}
               icon={
-                rowData.isTaken === "TAKEN" ? (
+                rowData?.isTaken === "TAKEN" ? (
                   <IconChecks />
                 ) : (
                   <IconAlertOctagon />
