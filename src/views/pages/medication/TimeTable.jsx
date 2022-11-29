@@ -10,7 +10,8 @@ import RenderCell from "@/ui-component/RenderTableCell";
 import MaterialTable from "material-table";
 
 //=========================|| TIME TABLE ||=========================//
-
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 const TimeTable = ({data}) => {
     const theme = useTheme();
     const xs = useMediaQuery(theme.breakpoints.down("sm"));
