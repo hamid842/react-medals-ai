@@ -9,30 +9,6 @@ import { prescriptions$ } from "@/api/get-prescriptions-for-current-user";
 const MedicationHistory = () => {
   const [prescriptions, setPrescriptions] = useState([]);
 
-  // const dummyPrescriptions = [
-  //   {
-  //     id:1,
-  //     medicine:{
-  //       brandName:"Aspirin",
-  //       usageDescription:"Take 1 tablet"
-  //     }
-  //   },
-  //   {
-  //     id:2,
-  //     medicine:{
-  //       brandName:"Acetaminophen",
-  //       usageDescription:"Take 1 tablet"
-  //     }
-  //   },
-  //   {
-  //     id:3,
-  //     medicine:{
-  //       brandName:"Zip mit",
-  //       usageDescription:"Take 1 tablet"
-  //     }
-  //   }
-  // ]
-
   useEffect(() => {
     prescriptions$.subscribe({
       next: (data) => setPrescriptions(data),
