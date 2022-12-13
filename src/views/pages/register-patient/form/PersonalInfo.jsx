@@ -28,7 +28,7 @@ import { strengthColor, strengthIndicator } from "@/utils/password-strength";
 const PersonalInfo = ({ handleNext }) => {
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
-  const [strength, setStrength] = useState(0);
+  const [passStrength, setPassStrength] = useState(0);
   const [level, setLevel] = useState();
 
   const handleClickShowPassword = () => {
@@ -41,7 +41,7 @@ const PersonalInfo = ({ handleNext }) => {
 
   const changePassword = (value) => {
     const temp = strengthIndicator(value);
-    setStrength(temp);
+    setPassStrength(temp);
     setLevel(strengthColor(temp));
   };
 
@@ -49,11 +49,11 @@ const PersonalInfo = ({ handleNext }) => {
     firstName: "",
     lastName: "",
     email: "",
+    birthDate: new Date(),
     password: "",
     confirmPass: "",
     phoneNumber1: "",
     phoneNumber2: "",
-    birthDate: new Date(),
     address: "",
   };
 
@@ -73,7 +73,6 @@ const PersonalInfo = ({ handleNext }) => {
       initialValues={patientPersonalInfo}
       validationSchema={validationSchema}
       onSubmit={async (values, { setSubmitting }) => {
-        await dispatch(login(values.email, values.password));
         await dispatch(registerPatient(values));
         setSubmitting(false);
       }}
@@ -146,7 +145,7 @@ const PersonalInfo = ({ handleNext }) => {
                 errors={touched.password && errors.password}
                 touched={touched}
                 showPassword={showPassword}
-                strength={strength}
+                strength={passStrength}
                 onBlur={handleBlur}
                 onChange={(e) => {
                   handleChange(e);

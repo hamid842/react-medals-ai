@@ -23,43 +23,43 @@ const MainRoutes = {
     element: <MainLayout/>,
     children: [
         {
-            path: '/dashboard',
+            path: 'dashboard',
             element: <Dashboard/>
         },
         {
-            path: '/medication-history',
+            path: 'medication-history',
             element: <MedicationHistory/>
         },
         {
-            path: '/appointments',
+            path: 'appointments',
             element: <Appointments/>
         },
         {
-            path: '/activity-records',
+            path: 'activity-records',
             element: <ActivityRecords/>
         },
         {
-            path: '/blood-oxygen',
+            path: 'blood-oxygen',
             element: <BloodOxygen/>
         },
         {
-            path: '/ecg',
+            path: 'ecg',
             element: <Ecg/>
         },
         {
-            path: '/analytics',
+            path: 'analytics',
             element: <Analytics/>
         },
         {
-            path: '/caregivers',
+            path: 'caregivers',
             element: <Caregivers/>
         },
         {
-            path: '/logs',
+            path: 'logs',
             element: <Logs/>
         },
         {
-            path: '/caregiver-patients-list',
+            path: 'caregiver-patients-list',
             element: <CaregiverPatients/>
         }
     ],

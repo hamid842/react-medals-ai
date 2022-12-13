@@ -7,7 +7,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Formik } from "formik";
 import * as Yup from "yup";
 //project imports
-import PharmacySelect from "./InsuranceSelect";
+import PharmacySelect from "./PharmacySelect";
 import AppField from "@/ui-component/AppTextField";
 import { pharmacies$ } from "@/api/get-pharmacies";
 
@@ -15,7 +15,8 @@ import { pharmacies$ } from "@/api/get-pharmacies";
 
 const PharmacyInformation = ({ handleBack, handleSave }) => {
   const [pharmacyInfo] = useState({
-    pharmacyName: "",
+    pharmacyId: "",
+    pharmacyAddress:"",
   });
   const validationSchema = Yup.object().shape({
     pharmacyName: Yup.string().required("This field is required!"),

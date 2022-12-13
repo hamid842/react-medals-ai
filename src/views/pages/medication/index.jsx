@@ -1,36 +1,49 @@
-import { useState , useEffect } from "react";
+import FullCalendar from "@fullcalendar/react";
+import {useEffect, useState} from "react";
 // project imports
-import PrescriptionItem from "./PrescriptionItem";
-import Loading from "@/ui-component/Loading";
-import { prescriptions$ } from "@/api/get-prescriptions-for-current-user";
+import {prescriptions$} from "@/api/get-prescriptions-for-current-user";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import RenderEventContent from "./RenderEventContent";
+import axios from "axios";
 
 // ============================|| MEDICATION HISTORY ||============================ //
 
 const MedicationHistory = () => {
-  const [prescriptions, setPrescriptions] = useState([]);
+    const [prescriptions, setPrescriptions] = useState([]);
+    const [timetables, setTimetables] = useState([]);
 
-  useEffect(() => {
-    prescriptions$.subscribe({
-      next: (data) => setPrescriptions(data),
-      error: (error) => console.log(error),
-      complete: () => console.log("prescriptions fetched for current user"),
-    });
-  }, []);
-  return (
-    <>
-      {prescriptions?.length ? (
-          prescriptions?.map((prescription) => {
-          return (
-            <PrescriptionItem
-              key={prescription?.id}
-              prescription={prescription}
-            />
-          );
+    const getPrescriptionTimetable = async (id) => {
+        await axios(`${import.meta.env.VITE_TIME_TABLES_FOR_PRESCRIPTION_ID_API}/${id}`)
+            .then(res => res.data)
+            .catch(err => console.log(err))
+    }
+
+    const getTimeTablesList = async () => {
+        await prescriptions$.subscribe({
+            next: data => setPrescriptions(data),
+            error: err => console.log(err),
+            complete: () => console.log("fetched")
         })
-      ) : (
-        <Loading visible={prescriptions.length === 0} />
-      )}
-    </>
-  );
+        return  prescriptions?.map(prescription => ({
+            "name": prescription.medicine.brandName,
+            "timetables": getPrescriptionTimetable(prescription.id)
+        }))
+
+    }
+
+    useEffect(() => {
+    setTimetables(getTimeTablesList)
+
+    }, []);
+    return (
+        <>
+            <FullCalendar
+                plugins={[dayGridPlugin]}
+                initialView="dayGridMonth"
+                eventContent={<RenderEventContent/>}
+            />
+
+        </>
+    );
 };
 export default MedicationHistory;

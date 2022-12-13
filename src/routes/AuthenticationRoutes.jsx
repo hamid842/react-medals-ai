@@ -22,23 +22,23 @@ const AuthenticationRoutes = {
             element: <LandingPage/>
         },
         {
-            path: '/landing',
+            path: 'landing',
             element: <LandingPage/>
         },
         {
-            path: '/login',
+            path: 'login',
             element: <LoginScreen/>
         },
         {
-            path: '/register',
+            path: 'register',
             element: <RegisterScreen/>
         },
         {
-            path: '/register-patient',
+            path: 'register-patient',
             element: <RegisterPatient/>
         },
         {
-            path: '/register-care-giver',
+            path: 'register-care-giver',
             element: <RegisterCareGiver/>
         }
     ],

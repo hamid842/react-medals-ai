@@ -102,12 +102,12 @@ const CreateCaregiverForm = ({isModal,caregiverDetails}) => {
                 if (res.status === 200 || 201) {
                     enqueueSnackbar("Registered successfully.", {variant: "success"})
                     setSubmitting(true);
-                    dispatch(login(values.username, values.password, navigate));
+                    dispatch(login(values.email, values.password, navigate));
                 }
             })
             .catch((err) => {
                 enqueueSnackbar(err?.response?.data?.message, {variant: "error"})
-                setErrors(err.response.data);
+                setErrors(err?.response?.data);
                 setSubmitting(false);
             });
     }
