@@ -5,7 +5,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import {getTimeTables} from "@/api/get-time-tables-of-prescription";
+import {getTimeTables} from "@/api/get-time-tables-of-patient";
 // project imports
 import TimeTable from "./TimeTable";
 import Loading from "@/ui-component/Loading";

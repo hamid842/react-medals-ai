@@ -15,30 +15,7 @@ import jwtDecode from "jwt-decode";
 const Appointments = () => {
     const {loggedInUserName} = useSelector(({login}) =>login)
     const [appointments, setAppointments] = useState([]);
-
-    // const dummyAppointments = [
-    //     {
-    //         "drName": "Dr.Brown",
-    //         "speciality": "NEPHROLOGY",
-    //         "visitDateTime": "2022-10-10T14:00:00"
-    //     },
-    //     {
-    //         "drName": "Dr.Jackson",
-    //         "speciality": "PSYCHIATRY",
-    //         "visitDateTime": "2022-09-29T11:30:00"
-    //     },
-    //     {
-    //         "drName": "Dr.White",
-    //         "speciality": "INTERNAL_MEDICINE",
-    //         "visitDateTime": "2022-09-10T15:00:00"
-    //     },
-    //     {
-    //         "drName": "Dr.White",
-    //         "speciality": "INTERNAL_MEDICINE",
-    //         "visitDateTime": "2022-12-10T18:30:00"
-    //     }
-    // ]
-
+    const [loading,setLoading] = useState(false)
 
     const getUsername = ()=>{
         if(loggedInUserName) {
@@ -49,11 +26,12 @@ const Appointments = () => {
         }
     }
     useEffect(() => {
+        setLoading(true);
         const appointments$ = getAppointments(getUsername());
         appointments$.subscribe({
             next: data => setAppointments(data),
-            error: err => console.log(err),
-            complete: () => console.log("Appointments fetched")
+            error: () => setLoading(false),
+            complete: () => setLoading(false)
         })
     }, [])
     return (
@@ -68,7 +46,7 @@ const Appointments = () => {
                     );
                 })
             ) : (
-                <Loading visible={appointments.length === 0}/>
+                <Loading visible={loading}/>
             )}
         </>
     )
