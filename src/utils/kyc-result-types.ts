@@ -1,0 +1,36 @@
+export interface IDetectionResult {
+    FAR?: string;
+    "ag-all"?: string;
+    applicantId?: string;
+    createDate?: Date;
+    documentImageBackUrl?: string;
+    documentImageUrl?: string;
+    facialReportResult?: string;
+    firstName?: string;
+    idNumber?: string;
+    imageUrl1?: string;
+    imageUrl2?: string;
+    imageUrl3?: string;
+    lastName?: string;
+    livenessResultId?: number;
+    livenessResultManualResult?: string;
+    livenessResultReason?: string;
+    livenessResultResult?: string;
+    onfidoFacialReportManualResult?: string;
+    onfidoFacialReportManualResultReason?: string;
+    onfidoManualResult?: string;
+    onfidoManualResultReason?: string;
+    recognitionResultId?: number;
+    recognitionResultManualResult?: string;
+    recognitionResultReason?: string;
+    recognitionResultResult?: string;
+    reportInfoId?: string;
+    reportInfoResult?: string;
+    reportUserKey?: string;
+    userIdCardPhotoId?: number;
+    userIdCardPhotoManualResult?: string;
+    userIdCardPhotoReason?: string;
+    userIdCardPhotoResult?: string;
+    userInfoId?: number;
+    userKey?: string;
+}
