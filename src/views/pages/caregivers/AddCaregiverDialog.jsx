@@ -9,15 +9,19 @@ import {
     DialogContentText,
     DialogTitle,
     Fab,
-    Grid
+    FormControl,
+    Grid,
+    InputLabel,
+    OutlinedInput,
+    Typography
 } from '@mui/material';
 import AddIcon from "@mui/icons-material/Add";
 // third party
-import * as Yup from "yup";
-import {Formik} from "formik";
-// project imports
-import AppField from "@/ui-component/AppTextField";
 import axios from "axios";
+// project imports
+import Autocomplete from "@mui/material/Autocomplete";
+import {useTheme} from "@mui/material/styles";
+import {useSnackbar} from "notistack";
 
 
 // ==============================|| CREATE CAREGIVER ||============================== //
@@ -26,8 +30,15 @@ import axios from "axios";
 const getAllCaregivers = import.meta.env.VITE_GET_ALL_CAREGIVERS_API;
 
 const AddCaregiverDialog = () => {
+    const theme = useTheme();
+    const {enqueueSnackbar} = useSnackbar();
     const [open, setOpen] = useState(false);
-    const [caption, setCaption] = useState(false)
+    const [openOptions, setOpenOptions] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [addLoading, setAddLoading] = useState(false);
+    const [options, setOptions] = useState([])
+    const [typedEmail, setTypedEmail] = useState("")
+    const [selectedCaregiver, setSelectedCaregiver] = useState()
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -35,28 +46,52 @@ const AddCaregiverDialog = () => {
 
     const handleClose = () => {
         setOpen(false);
-        setCaption(false)
     };
-    const validationSchema = Yup.object().shape({
-        email: Yup.string().email().required("Email is required!"),
 
-    });
+    const renderOption = (props,option) => {
+        if (option) {
+            return (
+                <Grid container alignItems={'center'} sx={{p: 1}} {...props}>
+                    <Grid item xs={12} sm={12} lg={12}>
+                        <Typography variant={'body1'}>
+                            {option?.firstName + " " + option?.lastName}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={12} lg={12}>
+                        <Typography variant={'caption'}>{option?.email}</Typography>
+                    </Grid>
+                </Grid>
+            )
+        } else {
+            return <></>
+        }
 
-    const caregiverInfo = {
-        email: ""
+    };
+
+
+    const handleKeyDown = async (event) => {
+        if (event.key === "Enter") {
+            setLoading(true)
+            await axios(`${getAllCaregivers}?email.equals=${typedEmail}`).then(res => {
+                if (res.status === 200 || 201) {
+                    setOpenOptions(true)
+                    setOptions(res.data);
+                    setLoading(false)
+                }
+            }).catch(err => {
+                setLoading(false);
+                console.log(err);
+            })
+        }
     }
 
-    const searchForCaregiver = async (values, {setErrors, setSubmitting}) => {
-        setSubmitting(true);
-        await axios(`${getAllCaregivers}?email.equals=${values.email}`).then(res => {
-            if (res.status === 200 || 201) {
-                setSubmitting(false);
-                res?.data?.length > 0 && setCaption(true);
-            }
-        }).catch(err => {
-            console.log(err);
-            setErrors(err);
-        })
+    const addCaregiverToPatient = ()=>{
+        if (!selectedCaregiver){
+            enqueueSnackbar("Please select a caregiver first!",{variant:"error"})
+        }else{
+            setOpenOptions(true);
+
+        }
     }
 
     return (
@@ -66,58 +101,76 @@ const AddCaregiverDialog = () => {
             <Dialog
                 open={open}
                 onClose={handleClose}
+
             >
                 <DialogTitle sx={{fontSize: 20}}>
                     {"Add new caregiver"}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText sx={{mb: 1}}>
-                        Please type the caregiver's email who want to add to your caregivers list correctly. If he/she
+                        Please type the caregiver's email who want to add to your caregivers list correctly and press
+                        'Enter'. If he/she
                         exists in system you will see the caption.
                     </DialogContentText>
-                    <Formik
-                        initialValues={caregiverInfo}
-                        validationSchema={validationSchema}
-                        onSubmit={searchForCaregiver}
-                    >
-                        {({
-                              errors,
-                              handleBlur,
-                              handleChange,
-                              handleSubmit,
-                              touched,
-                              values,
-                              isSubmitting
-                          }) => (
-                            <form noValidate onSubmit={handleSubmit}>
-                                <Grid container>
-                                    <Grid item xs={12} sm={12} lg={12}>
-                                        <AppField
-                                            id={"email"}
-                                            label={"Caregiver's email"}
-                                            name={"email"}
-                                            value={values?.email}
-                                            error={Boolean(touched?.email && errors?.email)}
-                                            errors={touched?.email && errors?.email}
-                                            onBlur={searchForCaregiver}
-                                            onChange={handleChange}
-                                        />
-                                        <small
-                                            style={{color: "green"}}>{caption && `"${values.email}" is exist in the system. Click add to continue.`}</small>
-                                    </Grid>
-                                </Grid>
-                                <DialogActions>
-                                    <Button onClick={handleClose}>Cancel</Button>
-                                    <Button type={'submit'}
-                                            startIcon={isSubmitting && <CircularProgress color={'inherit'} size={15}/>}>
-                                        Add
-                                    </Button>
-                                </DialogActions>
-                            </form>
-                        )}
-                    </Formik>
-                </DialogContent>
+                    <Grid container>
+                        <Grid item xs={12} sm={12} lg={12}>
+                            <Autocomplete
+                                size={"small"}
+                                open={openOptions}
+                                options={options}
+                                filterOptions={(options) => options}
+                                noOptionsText={"Press Enter Please.."}
+                                autoHighlight
+                                onOpen={() => {
+                                    setOpenOptions(true);
+                                }}
+                                onClose={() => {
+                                    setOptions([]);
+                                    setOpenOptions(false);
+                                }}
+                                onChange={(event, value) =>
+                                    setSelectedCaregiver(value)
+                                }
+                                renderOption={(props, option) => renderOption(props,option)}
+                                getOptionLabel={(option) => option.firstName+" "+option.lastName}
+                                getOptionSelected={
+                                    (option, value) => option?.id === value?.id
+                                }
 
+                                renderInput={params => (
+                                    <FormControl
+                                        fullWidth
+                                        sx={{...theme.typography.customInput}}
+                                        ref={params.InputProps.ref}
+                                    >
+                                        <InputLabel htmlFor={"caregiver-autocomplete"}>
+                                            Type the caregiver email and press ENTER
+                                        </InputLabel>
+                                        <OutlinedInput
+                                            id={"caregiver-autocomplete"}
+                                            type={"email"}
+                                            size={"small"}
+                                            fullWidth
+                                            required
+                                            value={typedEmail}
+                                            onChange={(event) => setTypedEmail(event.target.value)}
+                                            onKeyDown={handleKeyDown}
+                                            endAdornment={loading && <CircularProgress size={"15px"}/>}
+                                            {...params}
+                                        />
+                                    </FormControl>
+                                )}
+
+                            />
+                        </Grid>
+                    </Grid>
+                    <DialogActions sx={{mt:3}}>
+                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button onClick={addCaregiverToPatient} startIcon={addLoading && <CircularProgress  size={"15px"}/>}>
+                            Add
+                        </Button>
+                    </DialogActions>
+                </DialogContent>
             </Dialog>
         </div>
     );

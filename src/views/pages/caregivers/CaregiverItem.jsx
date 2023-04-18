@@ -67,10 +67,10 @@ const CaregiverItem = ({caregiverDetails}) => {
             ) : (
                 <CaregiverCardWrapper border={false} content={false}>
                     <Box sx={{p: 2.25}}>
-                        <Grid container direction="column">
+                        <Grid container direction="column" >
                             <Grid item>
                                 <Grid container justifyContent="space-between">
-                                    <Grid item>
+                                    <Grid item sm={4} lg={4}>
                                         <Avatar
                                             variant="rounded"
                                             sx={{
@@ -83,14 +83,14 @@ const CaregiverItem = ({caregiverDetails}) => {
                                             {caregiverDetails?.profileImageUrl && <img src={caregiverDetails?.profileImageUrl} alt="Pic"/>}
                                         </Avatar>
                                     </Grid>
-                                    <Grid item>
+                                    <Grid item sm={5} lg={5}>
                                         <Typography>{caregiverDetails?.socialSecurityNo}</Typography>
                                         <Typography>{caregiverDetails?.email}</Typography>
                                         <Typography>{caregiverDetails?.phoneNumber1}</Typography>
                                         <Typography>{caregiverDetails?.phoneNumber2}</Typography>
                                         <Typography>{caregiverDetails?.address}</Typography>
                                     </Grid>
-                                    <Grid item>
+                                    <Grid item >
                                         <Avatar
                                             variant="rounded"
                                             sx={{

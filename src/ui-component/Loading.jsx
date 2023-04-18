@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 
 //=========================< LOADING >============================//
 
-const Loading = ({ visible }) => {
+const Loading = ({ visible = false }) => {
   const classes = useStyles();
   return (
     <div className={classes.container}>

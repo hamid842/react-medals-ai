@@ -1,10 +1,10 @@
 import {createContext, useMemo, useState} from 'react';
 // third party
-import { useSelector } from 'react-redux';
-import { SnackbarProvider } from 'notistack';
+import {useSelector} from 'react-redux';
+import {SnackbarProvider} from 'notistack';
 // material ui
-import { ThemeProvider } from '@mui/material/styles';
-import { CssBaseline, StyledEngineProvider } from '@mui/material';
+import {ThemeProvider} from '@mui/material/styles';
+import {StyledEngineProvider} from '@mui/material';
 // routing
 import Routes from '@/routes';
 // defaultTheme
@@ -40,7 +40,6 @@ const App = () => {
             <ColorModeContext.Provider value={colorMode}>
             <ThemeProvider theme={theme}>
                 <SnackbarProvider maxSnack={3}>
-                <CssBaseline />
                 <NavigationScroll>
                     <Routes />
                 </NavigationScroll>

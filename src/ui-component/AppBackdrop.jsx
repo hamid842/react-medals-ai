@@ -6,7 +6,7 @@ import {HashLoader} from "react-spinners";
 
 // ==============================|| APP BACKDROP ||================================ //
 
-const AppBackdrop = ({loading}) => {
+const AppBackdrop = ({loading = false}) => {
     return (
         <Backdrop
             sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}

@@ -19,7 +19,6 @@ const CaregiverPatients = Loadable(lazy(() => import('@/views/pages/caregiver-pa
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
-    path: '/',
     element: <MainLayout/>,
     children: [
         {
